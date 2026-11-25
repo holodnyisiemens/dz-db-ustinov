@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: kennel-postgres
+    environment:
+      POSTGRES_DB: kennel
+      POSTGRES_USER: kennel
+      POSTGRES_PASSWORD: kennel
+    ports:
+      - "5432:5432"
+    volumes:
+      - kennel-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U kennel -d kennel" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  kennel-data:
